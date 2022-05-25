@@ -1,40 +1,43 @@
 import React from "react";
 //<-- All React native imports.... -->
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 //<-- All Compoments imports.... -->
 
 //<-- All Utils imports.... -->
 
-function R_Card(props) {
+function R_Card({ restaurent = {} }) {
   // <-- All const codes -->
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+  const {
+    name = "Some Restaurent",
+    icon,
+    photos = [
+      "https://www.refrigeratedfrozenfood.com/ext/resources/NEW_RD_Website/DefaultImages/default-pasta.jpg?1430942591",
+    ],
+    address = "100 some randome street",
+    isOpenNow = true,
+    rating = 4,
+    isClosedTemporary,
+  } = restaurent;
 
   return (
-    <Card>
-      <Card.Title
-        title="Card Title"
-        subtitle="Card Subtitle"
-        left={LeftContent}
-      />
+    <Card elevation={10}>
+      <Card.Cover style={styles.cover} key={name} source={{ uri: photos[0] }} />
       <Card.Content>
-        <Title>Card title</Title>
-        <Paragraph>Card content</Paragraph>
+        <Title>{name}</Title>
+        {/* <Paragraph>{address}</Paragraph> */}
+        <Text>{address}</Text>
       </Card.Content>
-      <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-      <Card.Actions>
-        <Button>Cancel</Button>
-        <Button>Ok</Button>
-      </Card.Actions>
     </Card>
   );
 }
+
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "blue",
+  cover: {
+    padding: 5,
+    backgeoundColor: "#fff",
   },
 });
 

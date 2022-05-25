@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   SafeAreaView,
   Platform,
   StatusBar,
@@ -11,13 +12,11 @@ import {
 import { Searchbar } from "react-native-paper";
 
 //<-- All Compoments imports.... -->
+import R_Card from "../component/R_Card";
 
 //<-- All Utils imports.... -->
 
 function R_Home(props) {
-  // <-- All const codes -->
-  const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-
   return (
     <View style={styles.container}>
       <View style={styles.search}>
@@ -25,10 +24,13 @@ function R_Home(props) {
         {/* <Text>search</Text> */}
         <Searchbar />
       </View>
-      <View style={styles.list}>
+      <ScrollView style={styles.list}>
         {/* List area */}
         <R_Card />
-      </View>
+        <R_Card />
+        <R_Card />
+        <R_Card />
+      </ScrollView>
     </View>
   );
 }
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 16,
-    backgroundColor: "blue",
   },
 });
 
