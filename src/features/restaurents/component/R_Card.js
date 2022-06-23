@@ -2,6 +2,7 @@ import React from "react";
 //<-- All React native imports.... -->
 import { StyleSheet, View, Text } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import styled from "styled-components/native";
 
 //<-- All Compoments imports.... -->
 
