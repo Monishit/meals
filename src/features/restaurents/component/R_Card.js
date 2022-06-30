@@ -1,45 +1,73 @@
 import React from "react";
 //<-- All React native imports.... -->
-import { StyleSheet, View, Text } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { Image } from "react-native";
 import styled from "styled-components/native";
+import { SvgXml } from "react-native-svg";
+import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../../components/typography/text.component";
+import {
+  RestaurantCard,
+  RestaurantCardCover,
+  Info,
+  Icon,
+  Rating,
+  Section,
+  SectionEnd,
+  Paragraph,
+} from "./R_Card_style";
 
-//<-- All Compoments imports.... -->
+//<-- All SvgIcons imports.... -->
+import star from "../../../../assets/svgIcons/star";
+import open from "../../../../assets/svgIcons/open";
 
 //<-- All Utils imports.... -->
 
-function R_Card({ restaurent = {} }) {
-  // <-- All const codes -->
-  const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+export default function R_Card({ restaurant = {} }) {
+  // <-- All Data for card info -->
   const {
-    name = "Some Restaurent",
-    icon,
+    name = "Some Restaurant",
+    icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
     photos = [
-      "https://www.refrigeratedfrozenfood.com/ext/resources/NEW_RD_Website/DefaultImages/default-pasta.jpg?1430942591",
+      "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
     ],
-    address = "100 some randome street",
+    address = "100 some random street",
     isOpenNow = true,
     rating = 4,
-    isClosedTemporary,
-  } = restaurent;
+    isClosedTemporarily = true,
+  } = restaurant;
+
+  // <-- Rating logging -->
+
+  const ratingArray = Array.from(new Array(Math.floor(rating)));
+  console.log(ratingArray);
 
   return (
-    <Card elevation={10}>
-      <Card.Cover style={styles.cover} key={name} source={{ uri: photos[0] }} />
-      <Card.Content>
-        <Title>{name}</Title>
-        {/* <Paragraph>{address}</Paragraph> */}
-        <Text>{address}</Text>
-      </Card.Content>
-    </Card>
+    <RestaurantCard elevation={5}>
+      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      <Info>
+        <Text variant="title">{name}</Text>
+        <Section>
+          <Rating>
+            {ratingArray.map(() => (
+              <SvgXml xml={star} width={20} height={20} />
+            ))}
+          </Rating>
+          <SectionEnd>
+            {isClosedTemporarily && (
+              <Text variant="caption" style={{ color: "red" }}>
+                CLOSED TEMPORARILY
+              </Text>
+            )}
+            <Spacer position="left" size="large">
+              {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+            </Spacer>
+            <Spacer position="left" size="large">
+              <Icon source={{ uri: icon }} />
+            </Spacer>
+          </SectionEnd>
+        </Section>
+        <Paragraph>{address}</Paragraph>
+      </Info>
+    </RestaurantCard>
   );
 }
-
-const styles = StyleSheet.create({
-  cover: {
-    padding: 5,
-    backgeoundColor: "#fff",
-  },
-});
-
-export default R_Card;

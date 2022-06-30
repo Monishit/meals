@@ -1,50 +1,45 @@
-import React from "react";
-//<-- All React native imports.... -->
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  SafeAreaView,
-  Platform,
-  StatusBar,
-} from "react-native";
+import * as React from "react";
+import { View, FlatList } from "react-native";
 import { Searchbar } from "react-native-paper";
-
-//<-- All Compoments imports.... -->
 import R_Card from "../component/R_Card";
+import styled from "styled-components/native";
+import { Spacer } from "../../../components/spacer/spacer.component";
+import { SafeArea } from "../../../components/utility/safe-area.component";
 
-//<-- All Utils imports.... -->
+export default function R_Home() {
+  // <-- All styled components... -->
 
-function R_Home(props) {
+  const SearchView = styled(View)`
+    padding: ${(props) => props.theme.space[3]};
+  `;
+
+  const RestaurentListView = styled(FlatList).attrs({
+    contentContainerStyle: { padding: 16 },
+  })``;
   return (
-    <View style={styles.container}>
-      <View style={styles.search}>
+    <SafeArea>
+      <SearchView>
         {/* Search Bar */}
-        {/* <Text>search</Text> */}
-        <Searchbar />
-      </View>
-      <ScrollView style={styles.list}>
-        {/* List area */}
-        <R_Card />
-        <R_Card />
-        <R_Card />
-        <R_Card />
-      </ScrollView>
-    </View>
+        <Searchbar placeholder="Search" />
+      </SearchView>
+      {/* List area */}
+      <RestaurentListView
+        data={[
+          { name: 1 },
+          { name: 2 },
+          { name: 3 },
+          { name: 4 },
+          { name: 5 },
+          { name: 6 },
+          { name: 7 },
+        ]}
+        renderItem={() => (
+          <Spacer position="bottom" size="large">
+            <R_Card />
+          </Spacer>
+        )}
+        keyExtractor={(item) => item.name}
+      />
+    </SafeArea>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  search: {
-    padding: 16,
-  },
-  list: {
-    flex: 1,
-    padding: 16,
-  },
-});
-
-export default R_Home;

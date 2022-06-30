@@ -1,17 +1,91 @@
-import react from "react";
-import { SafeAreaView, StyleSheet, Platform, StatusBar } from "react-native";
-import R_Home from "./src/features/restaurents/screens/R_Home"
+import * as React from "react";
+import { View, Text } from "react-native";
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./src/infrastructure/theme";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons, Entypo } from "@expo/vector-icons";
+import { SafeArea } from "./src/components/utility/safe-area.component";
 
-export default function App() {
+import R_Home from "./src/features/restaurents/screens/R_Home";
+import {
+  useFonts as useOswald,
+  Oswald_400Regular,
+} from "@expo-google-fonts/oswald";
+import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+
+function SettingsScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <R_Home />
-    </SafeAreaView>
+    <SafeArea style={{ justifyContent: "center", alignItems: "center" }}>
+      <Text>Settings!</Text>
+    </SafeArea>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 10 : 0,
-  },
-});
+
+function MapScreen() {
+  return (
+    <SafeArea style={{ justifyContent: "center", alignItems: "center" }}>
+      <Text>Map!</Text>
+    </SafeArea>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  const [oswaldLoaded] = useOswald({
+    Oswald_400Regular,
+  });
+
+  const [latoLoaded] = useLato({
+    Lato_400Regular,
+  });
+
+  if (!oswaldLoaded || !latoLoaded) {
+    return null;
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === "Restaurants") {
+                iconName = focused ? "restaurant" : "restaurant-outline";
+              } else if (route.name === "Settings") {
+                iconName = focused ? "ios-settings" : "ios-settings-outline";
+              } else if (route.name === "Map") {
+                iconName = focused ? "map" : "map-outline";
+              }
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: "tomato",
+            tabBarInactiveTintColor: "gray",
+          })}
+        >
+          <Tab.Screen
+            name="Restaurants"
+            component={R_Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Map"
+            component={MapScreen}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{ headerShown: false }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
+  );
+}
