@@ -1,10 +1,10 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { SafeArea } from "./src/components/utility/safe-area.component";
 
 import R_Home from "./src/features/restaurents/screens/R_Home";
