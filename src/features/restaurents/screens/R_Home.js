@@ -1,21 +1,25 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { View, FlatList } from "react-native";
 import { Searchbar } from "react-native-paper";
 import R_Card from "../component/R_Card";
 import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
+import { RestaurantsContext } from "../../../services/restautants/restaurants.context";
+
+// <-- All styled components... -->
+
+const SearchView = styled(View)`
+  padding: ${(props) => props.theme.space[3]};
+`;
+
+const RestaurentListView = styled(FlatList).attrs({
+  contentContainerStyle: { padding: 16 },
+})``;
 
 export default function R_Home() {
-  // <-- All styled components... -->
+  const { isLoading, error, restaurants } = useContext(RestaurantsContext);
 
-  const SearchView = styled(View)`
-    padding: ${(props) => props.theme.space[3]};
-  `;
-
-  const RestaurentListView = styled(FlatList).attrs({
-    contentContainerStyle: { padding: 16 },
-  })``;
   return (
     <SafeArea>
       <SearchView>
@@ -24,20 +28,14 @@ export default function R_Home() {
       </SearchView>
       {/* List area */}
       <RestaurentListView
-        data={[
-          { name: 1 },
-          { name: 2 },
-          { name: 3 },
-          { name: 4 },
-          { name: 5 },
-          { name: 6 },
-          { name: 7 },
-        ]}
-        renderItem={() => (
-          <Spacer position="bottom" size="large">
-            <R_Card />
-          </Spacer>
-        )}
+        data={restaurants}
+        renderItem={({ item }) => {
+          return (
+            <Spacer position="bottom" size="large">
+              <R_Card restaurant={item} />
+            </Spacer>
+          );
+        }}
         keyExtractor={(item) => item.name}
       />
     </SafeArea>

@@ -1,7 +1,4 @@
 import React from "react";
-//<-- All React native imports.... -->
-import { Image } from "react-native";
-import styled from "styled-components/native";
 import { SvgXml } from "react-native-svg";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { Text } from "../../../components/typography/text.component";
