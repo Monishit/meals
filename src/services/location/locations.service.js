@@ -1,0 +1,20 @@
+import camelize from "camelize";
+import { locations } from "./locations.mock";
+
+export default function locationRequest(searchTerm) {
+    return new Promise((resolve, reject) => {
+        const locationMock = locations[searchTerm];
+        if(!locationMock){
+            reject("not found");
+        }
+        resolve(locationMock);
+    });
+};
+
+export default function locationTransform(result) {
+    const formattedResponce = camelize(result);2
+    const {geometry = {}} = formattedResponce.results[0];
+    const {lat, lng } = geometry.location;
+
+return{lat, lng};
+};
