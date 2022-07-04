@@ -14,6 +14,7 @@ import {
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { RestaurantsContextProvider } from "./src/services/restautants/restaurants.context";
+import { locationContextProvider } from "./src/services/location/location.context";
 
 function SettingsScreen() {
   return (
@@ -48,47 +49,51 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <RestaurantsContextProvider>
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
+      <locationContextProvider>
+        <RestaurantsContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
 
-                if (route.name === "Restaurants") {
-                  iconName = focused ? "restaurant" : "restaurant-outline";
-                } else if (route.name === "Settings") {
-                  iconName = focused ? "ios-settings" : "ios-settings-outline";
-                } else if (route.name === "Map") {
-                  iconName = focused ? "map" : "map-outline";
-                }
-                // You can return any component that you like here!
-                return <Ionicons name={iconName} size={size} color={color} />;
-              },
-              tabBarActiveTintColor: "tomato",
-              tabBarInactiveTintColor: "gray",
-            })}
-          >
-            <Tab.Screen
-              name="Restaurants"
-              component={R_Home}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name="Map"
-              component={MapScreen}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{ headerShown: false }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </RestaurantsContextProvider>
+                  if (route.name === "Restaurants") {
+                    iconName = focused ? "restaurant" : "restaurant-outline";
+                  } else if (route.name === "Settings") {
+                    iconName = focused
+                      ? "ios-settings"
+                      : "ios-settings-outline";
+                  } else if (route.name === "Map") {
+                    iconName = focused ? "map" : "map-outline";
+                  }
+                  // You can return any component that you like here!
+                  return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: "tomato",
+                tabBarInactiveTintColor: "gray",
+              })}
+            >
+              <Tab.Screen
+                name="Restaurants"
+                component={R_Home}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name="Map"
+                component={MapScreen}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{ headerShown: false }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantsContextProvider>
+      </locationContextProvider>
     </ThemeProvider>
   );
 }
