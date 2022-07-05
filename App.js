@@ -14,7 +14,7 @@ import {
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { RestaurantsContextProvider } from "./src/services/restautants/restaurants.context";
-import { locationContextProvider } from "./src/services/location/location.context";
+import { LocationContextProvider } from "./src/services/location/location.context";
 
 function SettingsScreen() {
   return (
@@ -49,7 +49,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <locationContextProvider>
+      <LocationContextProvider>
         <RestaurantsContextProvider>
           <NavigationContainer>
             <Tab.Navigator
@@ -93,7 +93,7 @@ export default function App() {
             </Tab.Navigator>
           </NavigationContainer>
         </RestaurantsContextProvider>
-      </locationContextProvider>
+      </LocationContextProvider>
     </ThemeProvider>
   );
 }

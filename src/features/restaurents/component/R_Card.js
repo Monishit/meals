@@ -36,7 +36,6 @@ export default function R_Card({ restaurant = {} }) {
   // <-- Rating logging -->
 
   const ratingArray = Array.from(new Array(Math.floor(rating)));
-  console.log(ratingArray);
 
   return (
     <RestaurantCard elevation={5}>
